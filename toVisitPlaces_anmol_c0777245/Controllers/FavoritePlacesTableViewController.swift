@@ -18,8 +18,13 @@ class FavoritePlacesTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
+
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
         loadData()
+        self.tableView.reloadData()
+        
     }
     
     func getDataFilePath() -> String {
@@ -69,11 +74,12 @@ class FavoritePlacesTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
                 let favoritePlace = self.favoritePlaces![indexPath.row]
                 let cell = tableView.dequeueReusableCell(withIdentifier: "favoritePlaceCell")
                
-               cell?.textLabel?.text = String(favoritePlace.lat) + " - " + String(favoritePlace.long)
-        cell?.detailTextLabel?.text = favoritePlace.address
+               cell?.textLabel?.text =  favoritePlace.address
+        cell?.detailTextLabel?.text = "Lat: " + String(favoritePlace.lat) + " Long: " + String(favoritePlace.long)
                
 
                return cell!

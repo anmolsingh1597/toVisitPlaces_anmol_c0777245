@@ -13,7 +13,7 @@ class addPlaceViewController: UIViewController,  MKMapViewDelegate, UITabBarDele
 
     
     var favoritePlaces: [FavoritePlace]?
-    
+    var favoriteAddress: String?
         @IBOutlet weak var mapObject: MKMapView!
         let locationManager: CLLocationManager = {
             let manager = CLLocationManager()
@@ -52,7 +52,7 @@ class addPlaceViewController: UIViewController,  MKMapViewDelegate, UITabBarDele
                 view.addGestureRecognizer(tap)
             
             //MARK:- Notification for checking when user went out of app
-                NotificationCenter.default.addObserver(self, selector: #selector(saveData), name: UIApplication.willResignActiveNotification, object: nil)
+//                NotificationCenter.default.addObserver(self, selector: #selector(saveData), name: UIApplication.willResignActiveNotification, object: nil)
                 
                 loadData()
         }
@@ -66,10 +66,10 @@ class addPlaceViewController: UIViewController,  MKMapViewDelegate, UITabBarDele
     
     func loadData(){
         favoritePlaces = [FavoritePlace]()
-        
+
         let filePath = getDataFilePath()
         if FileManager.default.fileExists(atPath: filePath) {
-            
+
             do{
                 //creating string of file path
                 let fileContent = try String(contentsOfFile: filePath)
@@ -83,7 +83,7 @@ class addPlaceViewController: UIViewController,  MKMapViewDelegate, UITabBarDele
                         favoritePlaces?.append(favoritePlace)
                     }
                 }
-                
+
             }catch {
                 print(error)
             }
@@ -317,7 +317,7 @@ class addPlaceViewController: UIViewController,  MKMapViewDelegate, UITabBarDele
                 let speed = self.favoriteLocation?.speed
                 let course = self.favoriteLocation?.course
                 let altitude = self.favoriteLocation?.altitude
-                var favoriteAddress: String?
+                
                 CLGeocoder().reverseGeocodeLocation(self.favoriteLocation ?? CLLocation() ) { (placemarks, error) in
                              if error != nil {
                                  print("Error found: \(error!)")
@@ -331,38 +331,38 @@ class addPlaceViewController: UIViewController,  MKMapViewDelegate, UITabBarDele
                                      }
                                      
                                      if placemark.thoroughfare != nil {
-                                          address += placemark.thoroughfare! + "\n"
+                                          address += placemark.thoroughfare! + " "
                                      }
                                      
                                      if placemark.subLocality != nil {
-                                         address += placemark.subLocality! + "\n"
+                                         address += placemark.subLocality! + " "
                                                         }
                                      
                                      if placemark.subAdministrativeArea != nil {
-                                         address += placemark.subAdministrativeArea! + "\n"
+                                         address += placemark.subAdministrativeArea! + " "
                                                         }
                                      
                                      if placemark.postalCode != nil {
-                                         address += placemark.postalCode! + "\n"
+                                         address += placemark.postalCode! + " "
                                                         }
                                      
                                      if placemark.country != nil {
-                                         address += placemark.country! + "\n"
+                                         address += placemark.country!
                                                         }
                                      print(address)
-                                     favoriteAddress = address
-//                    let favoritePlace = FavoritePlace(lat: lat ?? 0.0, long: long ?? 0.0, speed: speed ?? 0.0, course: course ?? 0.0, altitude: altitude ?? 0.0, address: address)
-//                            self.favoritePlaces?.append(favoritePlace)
-                                  
+                                    self.favoriteAddress = address
+
+
+                                  let favoritePlace = FavoritePlace(lat: lat ?? 0.0, long: long ?? 0.0, speed: speed ?? 0.0, course: course ?? 0.0, altitude: altitude ?? 0.0, address: self.favoriteAddress ?? "no address found")
+
+                                         self.favoritePlaces?.append(favoritePlace)
+                                    print("Data Added Successfully")
+                                  self.saveData()
+                                  self.navigationController?.popToRootViewController(animated: true)
                                  }
-                             }
-                         }
-
-                let favoritePlace = FavoritePlace(lat: lat ?? 0.0, long: long ?? 0.0, speed: speed ?? 0.0, course: course ?? 0.0, altitude: altitude ?? 0.0, address: favoriteAddress ?? "no address found")
-
-                       self.favoritePlaces?.append(favoritePlace)
-                  print("Data Added Successfully")
-                       
+                           
+                            }
+                    }
             }
                 let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
                 alert.addAction(cancelAction)
