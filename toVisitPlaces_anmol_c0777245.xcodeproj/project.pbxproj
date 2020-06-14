@@ -9,21 +9,23 @@
 /* Begin PBXBuildFile section */
 		8EC4D6BF24966051003D14AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4D6BE24966051003D14AF /* AppDelegate.swift */; };
 		8EC4D6C124966051003D14AF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4D6C024966051003D14AF /* SceneDelegate.swift */; };
-		8EC4D6C324966051003D14AF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4D6C224966051003D14AF /* ViewController.swift */; };
 		8EC4D6C624966051003D14AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EC4D6C424966051003D14AF /* Main.storyboard */; };
 		8EC4D6C824966053003D14AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8EC4D6C724966053003D14AF /* Assets.xcassets */; };
 		8EC4D6CB24966053003D14AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EC4D6C924966053003D14AF /* LaunchScreen.storyboard */; };
+		8EC4D6D424966413003D14AF /* FavoritePlacesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4D6D324966413003D14AF /* FavoritePlacesTableViewController.swift */; };
+		8EC4D6D6249668B2003D14AF /* addPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4D6D5249668B2003D14AF /* addPlaceViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8EC4D6BB24966051003D14AF /* toVisitPlaces_anmol_c0777245.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = toVisitPlaces_anmol_c0777245.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EC4D6BE24966051003D14AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8EC4D6C024966051003D14AF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		8EC4D6C224966051003D14AF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8EC4D6C524966051003D14AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8EC4D6C724966053003D14AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8EC4D6CA24966053003D14AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8EC4D6CC24966053003D14AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8EC4D6D324966413003D14AF /* FavoritePlacesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePlacesTableViewController.swift; sourceTree = "<group>"; };
+		8EC4D6D5249668B2003D14AF /* addPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addPlaceViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +58,24 @@
 		8EC4D6BD24966051003D14AF /* toVisitPlaces_anmol_c0777245 */ = {
 			isa = PBXGroup;
 			children = (
+				8EC4D6D2249663E2003D14AF /* Controllers */,
 				8EC4D6BE24966051003D14AF /* AppDelegate.swift */,
 				8EC4D6C024966051003D14AF /* SceneDelegate.swift */,
-				8EC4D6C224966051003D14AF /* ViewController.swift */,
 				8EC4D6C424966051003D14AF /* Main.storyboard */,
 				8EC4D6C724966053003D14AF /* Assets.xcassets */,
 				8EC4D6C924966053003D14AF /* LaunchScreen.storyboard */,
 				8EC4D6CC24966053003D14AF /* Info.plist */,
 			);
 			path = toVisitPlaces_anmol_c0777245;
+			sourceTree = "<group>";
+		};
+		8EC4D6D2249663E2003D14AF /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8EC4D6D324966413003D14AF /* FavoritePlacesTableViewController.swift */,
+				8EC4D6D5249668B2003D14AF /* addPlaceViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,7 +149,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8EC4D6C324966051003D14AF /* ViewController.swift in Sources */,
+				8EC4D6D6249668B2003D14AF /* addPlaceViewController.swift in Sources */,
+				8EC4D6D424966413003D14AF /* FavoritePlacesTableViewController.swift in Sources */,
 				8EC4D6BF24966051003D14AF /* AppDelegate.swift in Sources */,
 				8EC4D6C124966051003D14AF /* SceneDelegate.swift in Sources */,
 			);
