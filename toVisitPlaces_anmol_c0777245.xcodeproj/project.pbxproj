@@ -14,6 +14,7 @@
 		8EC4D6CB24966053003D14AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EC4D6C924966053003D14AF /* LaunchScreen.storyboard */; };
 		8EC4D6D424966413003D14AF /* FavoritePlacesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4D6D324966413003D14AF /* FavoritePlacesTableViewController.swift */; };
 		8EC4D6D6249668B2003D14AF /* addPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4D6D5249668B2003D14AF /* addPlaceViewController.swift */; };
+		8EC4D6D924967A09003D14AF /* FavoritePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4D6D824967A09003D14AF /* FavoritePlace.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		8EC4D6CC24966053003D14AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8EC4D6D324966413003D14AF /* FavoritePlacesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePlacesTableViewController.swift; sourceTree = "<group>"; };
 		8EC4D6D5249668B2003D14AF /* addPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addPlaceViewController.swift; sourceTree = "<group>"; };
+		8EC4D6D824967A09003D14AF /* FavoritePlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePlace.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 		8EC4D6BD24966051003D14AF /* toVisitPlaces_anmol_c0777245 */ = {
 			isa = PBXGroup;
 			children = (
+				8EC4D6D7249679E7003D14AF /* Model */,
 				8EC4D6D2249663E2003D14AF /* Controllers */,
 				8EC4D6BE24966051003D14AF /* AppDelegate.swift */,
 				8EC4D6C024966051003D14AF /* SceneDelegate.swift */,
@@ -76,6 +79,14 @@
 				8EC4D6D5249668B2003D14AF /* addPlaceViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		8EC4D6D7249679E7003D14AF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8EC4D6D824967A09003D14AF /* FavoritePlace.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -152,6 +163,7 @@
 				8EC4D6D6249668B2003D14AF /* addPlaceViewController.swift in Sources */,
 				8EC4D6D424966413003D14AF /* FavoritePlacesTableViewController.swift in Sources */,
 				8EC4D6BF24966051003D14AF /* AppDelegate.swift in Sources */,
+				8EC4D6D924967A09003D14AF /* FavoritePlace.swift in Sources */,
 				8EC4D6C124966051003D14AF /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

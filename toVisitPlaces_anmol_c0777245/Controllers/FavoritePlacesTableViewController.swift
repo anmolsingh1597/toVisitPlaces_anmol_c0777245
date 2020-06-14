@@ -9,7 +9,7 @@
 import UIKit
 
 class FavoritePlacesTableViewController: UITableViewController {
-
+        var favoritePlaces: [FavoritePlace]?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,29 +18,67 @@ class FavoritePlacesTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        loadData()
     }
+    
+    func getDataFilePath() -> String {
+         let documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+         
+         let filePath = documentPath.appending("/Favorite-Place-Data.txt")
+         return filePath
+     }
+    
+    func loadData(){
+          favoritePlaces = [FavoritePlace]()
+          
+          let filePath = getDataFilePath()
+          if FileManager.default.fileExists(atPath: filePath) {
+              
+              do{
+                  //creating string of file path
+                  let fileContent = try String(contentsOfFile: filePath)
+                  // seperating books from each other
+                  let contentArray = fileContent.components(separatedBy: "\n")
+                  for content in contentArray {
+                      //seperating each book's content
+                      let favoritePlaceContent = content.components(separatedBy: ",")
+                      if favoritePlaceContent.count == 6 {
+                          let favoritePlace = FavoritePlace(lat: Double(favoritePlaceContent[0])!, long: Double(favoritePlaceContent[1])!, speed: Double(favoritePlaceContent[2])!, course: Double(favoritePlaceContent[3])!, altitude: Double(favoritePlaceContent[4])!, address: favoritePlaceContent[5])
+                          favoritePlaces?.append(favoritePlace)
+                      }
+                  }
+                  
+              }catch {
+                  print(error)
+              }
+          }
+      }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return favoritePlaces?.count ?? 0
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+                let favoritePlace = self.favoritePlaces![indexPath.row]
+                let cell = tableView.dequeueReusableCell(withIdentifier: "favoritePlaceCell")
+               
+               cell?.textLabel?.text = String(favoritePlace.lat) + " - " + String(favoritePlace.long)
+        cell?.detailTextLabel?.text = favoritePlace.address
+               
 
-        // Configure the cell...
-
-        return cell
+               return cell!
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.

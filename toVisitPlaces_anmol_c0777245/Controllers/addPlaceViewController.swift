@@ -11,6 +11,9 @@ import MapKit
 
 class addPlaceViewController: UIViewController,  MKMapViewDelegate, UITabBarDelegate, UITabBarControllerDelegate {
 
+    
+    var favoritePlaces: [FavoritePlace]?
+    
         @IBOutlet weak var mapObject: MKMapView!
         let locationManager: CLLocationManager = {
             let manager = CLLocationManager()
@@ -22,6 +25,7 @@ class addPlaceViewController: UIViewController,  MKMapViewDelegate, UITabBarDele
         @IBOutlet weak var routeTabBar: UITabBar!
         @IBOutlet weak var zoomStepper: UIStepper!
         
+    var favoriteLocation: CLLocation?
         
         var stepperComparingValue = 0.0
         
@@ -46,7 +50,72 @@ class addPlaceViewController: UIViewController,  MKMapViewDelegate, UITabBarDele
                 let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
                 tap.numberOfTapsRequired = 2
                 view.addGestureRecognizer(tap)
+            
+            //MARK:- Notification for checking when user went out of app
+                NotificationCenter.default.addObserver(self, selector: #selector(saveData), name: UIApplication.willResignActiveNotification, object: nil)
+                
+                loadData()
         }
+    
+    func getDataFilePath() -> String {
+        let documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        
+        let filePath = documentPath.appending("/Favorite-Place-Data.txt")
+        return filePath
+    }
+    
+    func loadData(){
+        favoritePlaces = [FavoritePlace]()
+        
+        let filePath = getDataFilePath()
+        if FileManager.default.fileExists(atPath: filePath) {
+            
+            do{
+                //creating string of file path
+                let fileContent = try String(contentsOfFile: filePath)
+                // seperating books from each other
+                let contentArray = fileContent.components(separatedBy: "\n")
+                for content in contentArray {
+                    //seperating each book's content
+                    let favoritePlaceContent = content.components(separatedBy: ",")
+                    if favoritePlaceContent.count == 6 {
+                        let favoritePlace = FavoritePlace(lat: Double(favoritePlaceContent[0])!, long: Double(favoritePlaceContent[1])!, speed: Double(favoritePlaceContent[2])!, course: Double(favoritePlaceContent[3])!, altitude: Double(favoritePlaceContent[4])!, address: favoritePlaceContent[5])
+                        favoritePlaces?.append(favoritePlace)
+                    }
+                }
+                
+            }catch {
+                print(error)
+            }
+        }
+    }
+    
+      // calling variable of another viewcontroller
+        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if let favoritePlacesListTableVC = segue.destination as? FavoritePlacesTableViewController {
+                favoritePlacesListTableVC.favoritePlaces = self.favoritePlaces
+            }
+        }
+        
+        @objc func saveData() {
+            let filePath = getDataFilePath()
+            
+            var saveString = ""
+            
+            for favoritePlace in self.favoritePlaces! {
+                saveString = "\(saveString)\(favoritePlace.lat),\(favoritePlace.long),\(favoritePlace.speed),\(favoritePlace.course),\(favoritePlace.altitude),\(favoritePlace.address)\n"
+            }
+            
+            do{
+                try saveString.write(toFile: filePath, atomically: true, encoding: .utf8)
+            } catch {
+                print(error)
+            }
+            
+            
+        }
+    
+
         
         //MARK: double tap function
         @objc func doubleTapped(gestureRecognizer: UITapGestureRecognizer)
@@ -58,8 +127,10 @@ class addPlaceViewController: UIViewController,  MKMapViewDelegate, UITabBarDele
             mapObject.removeOverlays(mapObject.overlays)
             //location finder with double tap
             let location = gestureRecognizer.location(in: mapObject)
+            
             self.tappedLocation = mapObject.convert(location, toCoordinateFrom: mapObject)
             
+            self.favoriteLocation = CLLocation(latitude: self.tappedLocation?.latitude ?? 0.00, longitude: self.tappedLocation?.longitude ?? 0.00)
             //annotation:
             let annotation = MKPointAnnotation()
             annotation.coordinate = self.tappedLocation!
@@ -238,7 +309,61 @@ class addPlaceViewController: UIViewController,  MKMapViewDelegate, UITabBarDele
         func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
     
                 let alert = UIAlertController(title: "Favorite Place", message: "Do you want to add this to your favorite place list?", preferredStyle: .alert)
-                let addAction = UIAlertAction(title: "Add", style: .cancel, handler: nil)
+            let addAction = UIAlertAction(title: "Add", style: .cancel) { (UIAlertAction) in
+//                print("Data Addition process")
+
+                let lat = self.favoriteLocation?.coordinate.latitude
+                let long = self.favoriteLocation?.coordinate.longitude
+                let speed = self.favoriteLocation?.speed
+                let course = self.favoriteLocation?.course
+                let altitude = self.favoriteLocation?.altitude
+                var favoriteAddress: String?
+                CLGeocoder().reverseGeocodeLocation(self.favoriteLocation ?? CLLocation() ) { (placemarks, error) in
+                             if error != nil {
+                                 print("Error found: \(error!)")
+                             } else {
+                                 if let placemark = placemarks?[0] {
+                                 
+                                 var address = ""
+                                 
+                                     if placemark.subThoroughfare != nil{
+                                         address += placemark.subThoroughfare! + " "
+                                     }
+                                     
+                                     if placemark.thoroughfare != nil {
+                                          address += placemark.thoroughfare! + "\n"
+                                     }
+                                     
+                                     if placemark.subLocality != nil {
+                                         address += placemark.subLocality! + "\n"
+                                                        }
+                                     
+                                     if placemark.subAdministrativeArea != nil {
+                                         address += placemark.subAdministrativeArea! + "\n"
+                                                        }
+                                     
+                                     if placemark.postalCode != nil {
+                                         address += placemark.postalCode! + "\n"
+                                                        }
+                                     
+                                     if placemark.country != nil {
+                                         address += placemark.country! + "\n"
+                                                        }
+                                     print(address)
+                                     favoriteAddress = address
+//                    let favoritePlace = FavoritePlace(lat: lat ?? 0.0, long: long ?? 0.0, speed: speed ?? 0.0, course: course ?? 0.0, altitude: altitude ?? 0.0, address: address)
+//                            self.favoritePlaces?.append(favoritePlace)
+                                  
+                                 }
+                             }
+                         }
+
+                let favoritePlace = FavoritePlace(lat: lat ?? 0.0, long: long ?? 0.0, speed: speed ?? 0.0, course: course ?? 0.0, altitude: altitude ?? 0.0, address: favoriteAddress ?? "no address found")
+
+                       self.favoritePlaces?.append(favoritePlace)
+                  print("Data Added Successfully")
+                       
+            }
                 let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
                 alert.addAction(cancelAction)
                 alert.addAction(addAction)
