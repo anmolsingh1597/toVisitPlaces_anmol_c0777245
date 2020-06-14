@@ -221,22 +221,30 @@ class addPlaceViewController: UIViewController,  MKMapViewDelegate, UITabBarDele
                 routeFinder()
             }
         }
-        
-        // Zoom In button
-    //    @IBAction func zoomInButton(_ sender: UIButton) {
-    //        var region: MKCoordinateRegion = mapObject.region
-    //        region.span.latitudeDelta /= 2.0
-    //        region.span.longitudeDelta /= 2.0
-    //        mapObject.setRegion(region, animated: true)
-    //    }
-        
-        // Zoom Out Buttom
-    //    @IBAction func zoomOutButton(_ sender: UIButton) {
-    //    var region: MKCoordinateRegion = mapObject.region
-    //    region.span.latitudeDelta = min(region.span.latitudeDelta * 2.0, 180.0)
-    //    region.span.longitudeDelta = min(region.span.longitudeDelta * 2.0, 180.0)
-    //    mapObject.setRegion(region, animated: true)
-    //    }
+
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+           if annotation is MKUserLocation{
+            return nil
+
+        }
+                    let pinAnnotation = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "droppablePin")
+                    pinAnnotation.animatesDrop = true
+                pinAnnotation.canShowCallout = true
+                pinAnnotation.rightCalloutAccessoryView = UIButton(type: .contactAdd)
+                    return pinAnnotation
+    }
+
+        //MARK:- callout accessory
+        func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    
+                let alert = UIAlertController(title: "Favorite Place", message: "Do you want to add this to your favorite place list?", preferredStyle: .alert)
+                let addAction = UIAlertAction(title: "Add", style: .cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+                alert.addAction(cancelAction)
+                alert.addAction(addAction)
+          
+             present(alert, animated: true, completion: nil)
+         }
         
     }
 
