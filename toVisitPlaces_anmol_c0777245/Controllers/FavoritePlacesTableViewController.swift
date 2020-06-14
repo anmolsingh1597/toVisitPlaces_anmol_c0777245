@@ -27,22 +27,22 @@ class FavoritePlacesTableViewController: UITableViewController {
         
     }
     
-    func deleteData(){
-//        let filePath = getDataFilePath()
-//
-//                var saveString = ""
-//
-//                for favoritePlace in self.favoritePlaces! {
-//                    saveString = "\(saveString)\(favoritePlace.lat),\(favoritePlace.long),\(favoritePlace.speed),\(favoritePlace.course),\(favoritePlace.altitude),\(favoritePlace.address)\n"
-//                }
-//
-//                do{
-//                    try saveString.write(toFile: filePath, atomically: true, encoding: .utf8)
-//                } catch {
-//                    print(error)
-//                }
-//
+    func deleteData(_ newArray: [FavoritePlace]){
         
+        let filePath = getDataFilePath()
+                   
+                   var saveString = ""
+                   
+                   for favoritePlace in newArray {
+                       saveString = "\(saveString)\(favoritePlace.lat),\(favoritePlace.long),\(favoritePlace.speed),\(favoritePlace.course),\(favoritePlace.altitude),\(favoritePlace.address)\n"
+                   }
+                   
+                   do{
+                       try saveString.write(toFile: filePath, atomically: true, encoding: .utf8)
+                   } catch {
+                       print(error)
+                   }
+                   
     }
     
     func getDataFilePath() -> String {
@@ -115,11 +115,26 @@ class FavoritePlacesTableViewController: UITableViewController {
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        var newArray = self.favoritePlaces!
+        
+        newArray.remove(at: indexPath.row)
+        
+        
+        // Prints "[1.1, 1.5, 1.2, 1.
+        
+//        var deleteString = ""
+//
+//        deleteString = "\(deleteString)\(favoritePlace.lat),\(favoritePlace.long),\(favoritePlace.speed),\(favoritePlace.course),\(favoritePlace.altitude),\(favoritePlace.address)\n"
+        
         if editingStyle == .delete {
             // Delete the row from the data source
             self.favoritePlaces?.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
-//            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            self.deleteData(newArray)
+            
+            
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
