@@ -120,13 +120,6 @@ class FavoritePlacesTableViewController: UITableViewController {
         
         newArray.remove(at: indexPath.row)
         
-        
-        // Prints "[1.1, 1.5, 1.2, 1.
-        
-//        var deleteString = ""
-//
-//        deleteString = "\(deleteString)\(favoritePlace.lat),\(favoritePlace.long),\(favoritePlace.speed),\(favoritePlace.course),\(favoritePlace.altitude),\(favoritePlace.address)\n"
-        
         if editingStyle == .delete {
             // Delete the row from the data source
             self.favoritePlaces?.remove(at: indexPath.row)
