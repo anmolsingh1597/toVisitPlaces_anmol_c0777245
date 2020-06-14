@@ -121,15 +121,23 @@ class FavoritePlacesTableViewController: UITableViewController {
         newArray.remove(at: indexPath.row)
         
         if editingStyle == .delete {
-            // Delete the row from the data source
-            self.favoritePlaces?.remove(at: indexPath.row)
-            self.tableView.deleteRows(at: [indexPath], with: .automatic)
-            
-            self.deleteData(newArray)
-            
+            let alert = UIAlertController(title: "Alert", message: "Are you sure you want to delete this?", preferredStyle: .alert)
+            let addAction = UIAlertAction(title: "OK", style: .default) { (UIAlertAction) in
+                // Delete the row from the data source
+                self.favoritePlaces?.remove(at: indexPath.row)
+                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                
+                self.deleteData(newArray)
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        
+            alert.addAction(addAction)
+            alert.addAction(cancelAction)
+               present(alert, animated: true, completion: nil)
             
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+//            print("insert")
         }    
     }
     
