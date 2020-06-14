@@ -27,6 +27,24 @@ class FavoritePlacesTableViewController: UITableViewController {
         
     }
     
+    func deleteData(){
+//        let filePath = getDataFilePath()
+//
+//                var saveString = ""
+//
+//                for favoritePlace in self.favoritePlaces! {
+//                    saveString = "\(saveString)\(favoritePlace.lat),\(favoritePlace.long),\(favoritePlace.speed),\(favoritePlace.course),\(favoritePlace.altitude),\(favoritePlace.address)\n"
+//                }
+//
+//                do{
+//                    try saveString.write(toFile: filePath, atomically: true, encoding: .utf8)
+//                } catch {
+//                    print(error)
+//                }
+//
+        
+    }
+    
     func getDataFilePath() -> String {
          let documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
          
@@ -99,8 +117,9 @@ class FavoritePlacesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            print("Deleted")
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            self.favoritePlaces?.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
