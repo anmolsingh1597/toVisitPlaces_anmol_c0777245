@@ -58,6 +58,30 @@
             </objects>
             <point key="canvasLocation" x="3572.4637681159425" y="143.97321428571428"/>
         </scene>
+        <!--Edit Place View Controller-->
+        <scene sceneID="bnV-WL-jTN">
+            <objects>
+                <viewController storyboardIdentifier="editPlaceViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="WN8-0w-zsH" customClass="EditPlaceViewController" customModule="toVisitPlaces_anmol_c0777245" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7Rz-gj-G1n">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="D9u-ja-XPH">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="G3W-c6-elX"/>
+                    </view>
+                    <connections>
+                        <outlet property="mapForEditPlace" destination="D9u-ja-XPH" id="ouI-hS-QX6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xLz-dk-o0t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3572.4637681159425" y="956.25"/>
+        </scene>
         <!--Add Place-->
         <scene sceneID="s3s-ni-RKg">
             <objects>

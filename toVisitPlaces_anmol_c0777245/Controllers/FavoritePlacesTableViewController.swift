@@ -9,8 +9,12 @@
 import UIKit
 
 class FavoritePlacesTableViewController: UITableViewController {
+    
+        let defaults = UserDefaults.standard
+
+    
         var favoritePlaces: [FavoritePlace]?
-    override func viewDidLoad() {
+        override func viewDidLoad() {
         super.viewDidLoad()
 
         // Uncomment the following line to preserve selection between presentations
@@ -141,6 +145,17 @@ class FavoritePlacesTableViewController: UITableViewController {
         }    
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        print(self.favoritePlaces![indexPath.row].address)
+        let favoritePlace = self.favoritePlaces![indexPath.row]
+        
+        defaults.set(favoritePlace.lat, forKey: "editLat")
+        defaults.set(favoritePlace.long, forKey: "editLong")
+        
+        let editPlaceViewController = self.storyboard?.instantiateViewController(withIdentifier: "editPlaceViewController") as! EditPlaceViewController
+
+        self.navigationController?.pushViewController(editPlaceViewController, animated: true)
+    }
 
     /*
     // Override to support rearranging the table view.

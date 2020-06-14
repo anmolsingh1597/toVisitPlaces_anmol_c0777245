@@ -15,6 +15,7 @@
 		8EC4D6D424966413003D14AF /* FavoritePlacesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4D6D324966413003D14AF /* FavoritePlacesTableViewController.swift */; };
 		8EC4D6D6249668B2003D14AF /* addPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4D6D5249668B2003D14AF /* addPlaceViewController.swift */; };
 		8EC4D6D924967A09003D14AF /* FavoritePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4D6D824967A09003D14AF /* FavoritePlace.swift */; };
+		8EC4D6DB2496E456003D14AF /* EditPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4D6DA2496E456003D14AF /* EditPlaceViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		8EC4D6D324966413003D14AF /* FavoritePlacesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePlacesTableViewController.swift; sourceTree = "<group>"; };
 		8EC4D6D5249668B2003D14AF /* addPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addPlaceViewController.swift; sourceTree = "<group>"; };
 		8EC4D6D824967A09003D14AF /* FavoritePlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePlace.swift; sourceTree = "<group>"; };
+		8EC4D6DA2496E456003D14AF /* EditPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPlaceViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 			children = (
 				8EC4D6D324966413003D14AF /* FavoritePlacesTableViewController.swift */,
 				8EC4D6D5249668B2003D14AF /* addPlaceViewController.swift */,
+				8EC4D6DA2496E456003D14AF /* EditPlaceViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -160,6 +163,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EC4D6DB2496E456003D14AF /* EditPlaceViewController.swift in Sources */,
 				8EC4D6D6249668B2003D14AF /* addPlaceViewController.swift in Sources */,
 				8EC4D6D424966413003D14AF /* FavoritePlacesTableViewController.swift in Sources */,
 				8EC4D6BF24966051003D14AF /* AppDelegate.swift in Sources */,

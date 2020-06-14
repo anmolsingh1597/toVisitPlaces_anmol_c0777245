@@ -292,7 +292,8 @@ class addPlaceViewController: UIViewController,  MKMapViewDelegate, UITabBarDele
                 routeFinder()
             }
         }
-
+    
+    //MARK: View for annotation
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
            if annotation is MKUserLocation{
             return nil
@@ -300,8 +301,8 @@ class addPlaceViewController: UIViewController,  MKMapViewDelegate, UITabBarDele
         }
                     let pinAnnotation = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "droppablePin")
                     pinAnnotation.animatesDrop = true
-                pinAnnotation.canShowCallout = true
-                pinAnnotation.rightCalloutAccessoryView = UIButton(type: .contactAdd)
+                    pinAnnotation.canShowCallout = true
+                    pinAnnotation.rightCalloutAccessoryView = UIButton(type: .contactAdd)
                     return pinAnnotation
     }
 
