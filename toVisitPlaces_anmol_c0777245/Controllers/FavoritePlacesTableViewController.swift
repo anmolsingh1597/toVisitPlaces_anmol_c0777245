@@ -12,7 +12,7 @@ class FavoritePlacesTableViewController: UITableViewController {
     
         let defaults = UserDefaults.standard
 
-    
+    var editPlace: FavoritePlace?
         var favoritePlaces: [FavoritePlace]?
         override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,6 +81,7 @@ class FavoritePlacesTableViewController: UITableViewController {
               }
           }
       }
+    
 
     // MARK: - Table view data source
 
@@ -145,15 +146,18 @@ class FavoritePlacesTableViewController: UITableViewController {
         }    
     }
     
+    //MARK: User defaults
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        print(self.favoritePlaces![indexPath.row].address)
         let favoritePlace = self.favoritePlaces![indexPath.row]
+        self.editPlace = self.favoritePlaces![indexPath.row]
         
         defaults.set(favoritePlace.lat, forKey: "editLat")
         defaults.set(favoritePlace.long, forKey: "editLong")
         
         let editPlaceViewController = self.storyboard?.instantiateViewController(withIdentifier: "editPlaceViewController") as! EditPlaceViewController
 
+        editPlaceViewController.editPlaceIndex = indexPath.row
+        
         self.navigationController?.pushViewController(editPlaceViewController, animated: true)
     }
 

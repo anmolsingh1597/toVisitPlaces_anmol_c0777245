@@ -15,14 +15,15 @@ class EditPlaceViewController: UIViewController {
     let defaults = UserDefaults.standard
     var editLat: Double = 0.0
     var editLong: Double = 0.0
+    var editPlaceIndex: Int?
+    var editPlaces: [FavoritePlace]?
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        loadData()
         intials()
     }
     
     func intials() {
-        
         //mapviewDelegate
         mapForEditPlace.delegate = self
         
@@ -35,13 +36,14 @@ class EditPlaceViewController: UIViewController {
         //MARK: User defaults
         self.editLat = defaults.double(forKey: "editLat")
         self.editLong = defaults.double(forKey: "editLong")
-        print("\(editLat) : \(editLong)")
+
+
                
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2D(latitude: editLat, longitude: editLong)
         annotation.title = "Drag this to edit"
         mapForEditPlace.addAnnotation(annotation)
-        
+       
         
         let latDelta: CLLocationDegrees = 0.05
         let longDelta: CLLocationDegrees = 0.05
@@ -55,20 +57,123 @@ class EditPlaceViewController: UIViewController {
     }
 
     @objc func doneBtnTapped(){
+        print(mapForEditPlace.annotations[0].coordinate)
+        edittedData(mapForEditPlace.annotations[0].coordinate.latitude, mapForEditPlace.annotations[0].coordinate.longitude)
+    }
+   
+    
+    func editData(_ newArray: [FavoritePlace]){
         
+        let filePath = getDataFilePath()
+                   
+                   var saveString = ""
+                   
+                   for favoritePlace in newArray {
+                       saveString = "\(saveString)\(favoritePlace.lat),\(favoritePlace.long),\(favoritePlace.speed),\(favoritePlace.course),\(favoritePlace.altitude),\(favoritePlace.address)\n"
+                   }
+                   
+                   do{
+                       try saveString.write(toFile: filePath, atomically: true, encoding: .utf8)
+                   } catch {
+                       print(error)
+                   }
+                   
     }
     
-    /*
-    // MARK: - Navigation
+    func getDataFilePath() -> String {
+         let documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+         
+         let filePath = documentPath.appending("/Favorite-Place-Data.txt")
+         return filePath
+     }
+    
+    func loadData(){
+          editPlaces = [FavoritePlace]()
+          
+          let filePath = getDataFilePath()
+          if FileManager.default.fileExists(atPath: filePath) {
+              
+              do{
+                  //creating string of file path
+                  let fileContent = try String(contentsOfFile: filePath)
+                  // seperating books from each other
+                  let contentArray = fileContent.components(separatedBy: "\n")
+                  for content in contentArray {
+                      //seperating each book's content
+                      let favoritePlaceContent = content.components(separatedBy: ",")
+                      if favoritePlaceContent.count == 6 {
+                          let favoritePlace = FavoritePlace(lat: Double(favoritePlaceContent[0])!, long: Double(favoritePlaceContent[1])!, speed: Double(favoritePlaceContent[2])!, course: Double(favoritePlaceContent[3])!, altitude: Double(favoritePlaceContent[4])!, address: favoritePlaceContent[5])
+                          editPlaces?.append(favoritePlace)
+                      }
+                  }
+                  
+              }catch {
+                  print(error)
+              }
+          }
+      }
+    
+    
+    func edittedData(_ latitude: CLLocationDegrees, _ longitude: CLLocationDegrees) {
+        let lat = latitude
+        let long = longitude
+        
+        let speed = CLLocation(latitude: latitude, longitude: longitude).speed
+        let course =  CLLocation(latitude: latitude, longitude: longitude).course
+        let altitude =  CLLocation(latitude: latitude, longitude: longitude).altitude
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        CLGeocoder().reverseGeocodeLocation( CLLocation(latitude: latitude, longitude: longitude) ) { (placemarks, error) in
+                          if error != nil {
+                              print("Error found: \(error!)")
+                          } else {
+                              if let placemark = placemarks?[0] {
+
+                              var address = ""
+
+                                  if placemark.subThoroughfare != nil{
+                                      address += placemark.subThoroughfare! + " "
+                                  }
+
+                                  if placemark.thoroughfare != nil {
+                                       address += placemark.thoroughfare! + " "
+                                  }
+
+                                  if placemark.subLocality != nil {
+                                      address += placemark.subLocality! + " "
+                                                     }
+
+                                  if placemark.subAdministrativeArea != nil {
+                                      address += placemark.subAdministrativeArea! + " "
+                                                     }
+
+                                  if placemark.postalCode != nil {
+                                      address += placemark.postalCode! + " "
+                                                     }
+
+                                  if placemark.country != nil {
+                                      address += placemark.country!
+                                                     }
+                                  print(address)
+                                 
+
+
+                                let editPlace = FavoritePlace(lat: lat , long: long , speed: speed , course: course , altitude: altitude , address: address )
+
+                                self.editPlaces?.remove(at: self.editPlaceIndex!)
+                                      self.editPlaces?.append(editPlace)
+                                 print("Data Added Successfully")
+                                self.editData(self.editPlaces!)
+                               self.navigationController?.popToRootViewController(animated: true)
+                              }
+
+                         }
+                 }
+         }
     }
-    */
 
-}
+    
+    
+
 
 extension EditPlaceViewController: MKMapViewDelegate {
     
