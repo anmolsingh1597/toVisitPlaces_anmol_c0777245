@@ -12,6 +12,8 @@ import MapKit
 class EditPlaceViewController: UIViewController {
     @IBOutlet weak var mapForEditPlace: MKMapView!
     
+    @IBOutlet weak var ZoomStepper: UIStepper!
+    var stepperComparingValue = 0.0
     let defaults = UserDefaults.standard
     var editLat: Double = 0.0
     var editLong: Double = 0.0
@@ -55,10 +57,41 @@ class EditPlaceViewController: UIViewController {
         // 4 - assign region to map
         mapForEditPlace.setRegion(region, animated: true)
     }
+    
+     //MARK:- Stepper value change
+    @IBAction func stepperValueChanged(_ sender: UIStepper) {
+        
+        let stepperValue = ZoomStepper.value
+                if(stepperValue > self.stepperComparingValue){
 
+                    var region: MKCoordinateRegion = mapForEditPlace.region
+                    region.span.latitudeDelta /= 2.0
+                    region.span.longitudeDelta /= 2.0
+                    mapForEditPlace.setRegion(region, animated: true)
+                    self.stepperComparingValue = stepperValue
+                }else if(stepperValue < self.stepperComparingValue){
+
+                    var region: MKCoordinateRegion = mapForEditPlace.region
+                      region.span.latitudeDelta = min(region.span.latitudeDelta * 2.0, 180.0)
+                      region.span.longitudeDelta = min(region.span.longitudeDelta * 2.0, 180.0)
+                      mapForEditPlace.setRegion(region, animated: true)
+                    self.stepperComparingValue = stepperValue
+                }
+        
+    }
+    
     @objc func doneBtnTapped(){
-        print(mapForEditPlace.annotations[0].coordinate)
-        edittedData(mapForEditPlace.annotations[0].coordinate.latitude, mapForEditPlace.annotations[0].coordinate.longitude)
+        let alert = UIAlertController(title: "Alert", message: "Are you sure to save this new location?", preferredStyle: .alert)
+        let addAction = UIAlertAction(title: "Yes", style: .default) { (UIAlertAction) in
+            print(self.mapForEditPlace.annotations[0].coordinate)
+            self.edittedData(self.mapForEditPlace.annotations[0].coordinate.latitude, self.mapForEditPlace.annotations[0].coordinate.longitude)
+                    
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+            alert.addAction(addAction)
+            alert.addAction(cancelAction)
+
+            present(alert, animated: true, completion: nil)
     }
    
     

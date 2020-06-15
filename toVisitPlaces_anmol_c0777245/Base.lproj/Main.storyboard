@@ -70,11 +70,19 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </mapView>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minimumValue="-100" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="PRp-cC-0RA">
+                                <rect key="frame" x="20" y="113" width="94" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="stepperValueChanged:" destination="WN8-0w-zsH" eventType="valueChanged" id="N3j-CN-Bkw"/>
+                                </connections>
+                            </stepper>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="G3W-c6-elX"/>
                     </view>
                     <connections>
+                        <outlet property="ZoomStepper" destination="PRp-cC-0RA" id="OY6-aY-DdU"/>
                         <outlet property="mapForEditPlace" destination="D9u-ja-XPH" id="ouI-hS-QX6"/>
                     </connections>
                 </viewController>
